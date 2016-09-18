@@ -1,19 +1,25 @@
 class Sim
 {
-	var sexo //asd
+	var sexo
 	var edad
 	var nivelFelicidad 	= 0
 	var amigos 			= []
 	var dinero			= 0
 	var conocimientos 	= #{}
-	var trabajo
+	var trabajo			= null
 	var estadoDeAnimo
-	var sexoPreferencia
 	var pareja			= false
+	var sexoPreferencia
 	var atraccion 		= []
 	
-	
-	
+	constructor(sex,ed,nFelicidad,amigs, sexPreferencia)
+	{
+		sexo 			= sex
+		edad 			= ed
+		nivelFelicidad 	= nFelicidad
+		amigos 			= amigs
+		sexoPreferencia = sexPreferencia
+	}
 	
 	method valoracion(sim)
 	
@@ -112,7 +118,10 @@ class Sim
 	
 	method trabajar()
 	{
-		trabajo.trabajar(self)
+		if(trabajo != null)
+			trabajo.trabajar(self)
+		else
+			error.throwWithMessage("Este sim esta desempleado :(")
 	}
 	
 	method abrazar(sim, abrazo)
@@ -216,11 +225,18 @@ class Sim
  	{
  		return amigos.sum({sim => sim.dinero()})
  	}
+ 	
+ 	method AsignarTrabajo(trabajoNuevo)
+ 	{
+ 		trabajo = trabajoNuevo
+ 	}
 
 }
 
 class SimInteresado inherits Sim
 {
+		constructor(sex,ed,nFelicidad,amigs,sexPreferencia) = super(sex,ed,nFelicidad,amigs,sexPreferencia)
+	
 	override method valoracion(sim) 
 	{
   		return sim.dineroDeAmigos() * 0.1
@@ -239,6 +255,8 @@ class SimInteresado inherits Sim
 
 class SimSuperficial inherits Sim
 {
+		constructor(sex,ed,nFelicidad,amigs,sexPreferencia) = super(sex,ed,nFelicidad,amigs,sexPreferencia)
+	
 	override method valoracion(sim)
 	{
 		return 20 * sim.popularidad()
@@ -258,6 +276,8 @@ class SimSuperficial inherits Sim
 
 class SimBuenazo inherits Sim
 {
+		constructor(sex,ed,nFelicidad,amigs,sexPreferencia) = super(sex,ed,nFelicidad,amigs,sexPreferencia)
+	
 	override method simMasValorado()
 	{
 		return null
@@ -276,6 +296,8 @@ class SimBuenazo inherits Sim
 
 class SimPeleado inherits Sim
 {
+		constructor(sex,ed,nFelicidad,amigs,sexPreferencia) = super(sex,ed,nFelicidad,amigs,sexPreferencia)
+	
 	override method simMasValorado()
 	{
 		return null
