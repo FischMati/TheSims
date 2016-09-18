@@ -1,0 +1,88 @@
+import Sims.*
+import Abrazos.*
+import EstadoDeAnimo.*
+
+object fixture
+{
+	method unSimInteresado()
+	{
+		return new SimInteresado()
+	}
+	
+	method unSimBuenazo()
+	{
+		return new SimBuenazo()
+	}
+	
+	method unAbrazoComun()
+	{
+		return new AbrazoComun()
+	}
+	
+	method unAbrazoProlongado()
+	{
+		return new AbrazoProlongado()
+	}
+}
+
+
+test "El abrazo comun aumenta la felicidad del dador en 2" 
+{
+	var dador 					= fixture.unSimInteresado()
+	var receptor 				= fixture.unSimInteresado()
+	var unAbrazoComun 			= fixture.unAbrazoComun()
+	var felicidadDelDador 		= dador.nivelFelicidad()
+	
+	
+	dador.abrazar(receptor, unAbrazoComun)
+	
+	assert.equals(dador.nivelFelicidad(), felicidadDelDador + 2)
+}
+
+test "El abrazo comun aumenta la felicidad del receptor en 4" 
+{
+	var dador 					= fixture.unSimInteresado()
+	var receptor 				= fixture.unSimInteresado()
+	var unAbrazoComun 			= fixture.unAbrazoComun()
+	var felicidadDelReceptor 	= receptor.nivelFelicidad()
+	
+	
+	dador.abrazar(receptor, unAbrazoComun)
+	
+	assert.equals(receptor.nivelFelicidad(), felicidadDelReceptor + 4)
+}
+
+test "El abrazo prolongado de alguien que le atrae pone soñador al sim abrazado" 
+{
+	var dador 					= fixture.unSimBuenazo()
+	var receptor 				= fixture.unSimBuenazo()
+	var unAbrazoProlongado 		= fixture.unAbrazoProlongado()
+	
+	dador.abrazar(receptor, unAbrazoProlongado)
+	
+	assert.equals(receptor.estadoDeAnimo(), soniador)
+}
+
+test "El abrazo prolongado de alguien que no le atrae pone incomodo al sim abrazado" 
+{
+	var dador 					= new SimPeleado()
+	var receptor 				= new SimPeleado()
+	var unAbrazoProlongado 		= fixture.unAbrazoProlongado()
+	
+	dador.nivelFelicidad(201)
+	dador.abrazar(receptor, unAbrazoProlongado)
+	
+	assert.equals(receptor.estadoDeAnimo(), incomodo)
+}
+
+test "un sim tiene amigos :D"
+{
+	var unSim = new SimInteresado()
+	var unAmigo = new SimBuenazo()
+	var unAmigo2 = new SimPeleado()
+	
+	unSim.hacerAmigo(unAmigo)
+	unSim.hacerAmigo(unAmigo2)
+	
+	assert.equals(unSim.amigos(), [unAmigo, unAmigo2])
+}

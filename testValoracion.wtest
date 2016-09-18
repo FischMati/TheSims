@@ -1,0 +1,51 @@
+import Sims.*
+
+test "Un sim interesado valora en 30 a un sim cuyos amigos tienen en total $300 " 
+{
+ 	var valorador = new SimInteresado()
+ 	var valorado = new SimInteresado()
+ 	var amigo1 = new SimInteresado()
+ 	var amigo2 = new SimInteresado()
+ 
+ 	amigo1.ganarDinero(100)
+ 	amigo2.ganarDinero(200)
+ 
+ 	valorado.hacerAmigo(amigo1)
+ 	valorado.hacerAmigo(amigo2)
+ 
+ 	assert.equals(30,valorador.valoracion(valorado))
+}
+
+test "Un sim superficial valora en 500 a un sim cuya popularidad es de 25 " 
+{
+ 	var valorador = new SimSuperficial()
+ 	var valorado = new SimPeleado()
+ 	var amigo1 = new SimInteresado()
+ 	var amigo2 = new SimBuenazo()
+ 
+ 	amigo1.nivelFelicidad(10)
+ 	amigo2.nivelFelicidad(15)
+ 
+ 	valorado.hacerAmigo(amigo1)
+ 	valorado.hacerAmigo(amigo2)
+ 
+ 	assert.equals(500,valorador.valoracion(valorado))
+}
+
+test "Un sim buenazo valora a otro sim en la mitad de su propio nivel de felicidad" 
+{
+ 	var ernesto = new SimBuenazo()
+ 	var maria = new SimInteresado()
+ 
+ 	ernesto.nivelFelicidad(1000)
+ 
+ 	assert.equals(500, ernesto.valoracion(maria)) 
+}
+
+test "Un sim peleado con su vida valora en 0 a otro sim" 
+{
+ 	var valorador = new SimPeleado()
+ 	var valorado = new SimInteresado()
+ 
+ 	assert.equals(0,valorador.valoracion(valorado))
+}
