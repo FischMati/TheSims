@@ -1,0 +1,7 @@
+import Sims.*
+
+test "Contarle una información a un Sim" {
+
+	assert.that(true)
+
+}
