@@ -1,6 +1,6 @@
 class Sim
 {
-	var sexo
+	var sexo //asd
 	var edad
 	var nivelFelicidad 	= 0
 	var amigos 			= []
